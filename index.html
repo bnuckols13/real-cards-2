@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Skill Trading Cards - Vintage Collection</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --parchment: #F4E8D0;
+            --aged-paper: #E8DCC4;
+            --ink-brown: #3D2817;
+            --sepia: #704214;
+            --copper: #B87333;
+            --bronze: #8C6239;
+            --antique-gold: #CFB53B;
+            --sage: #87A878;
+            --vintage-teal: #5F9EA0;
+            --rust: #A0522D;
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            background: 
+                linear-gradient(90deg, rgba(61, 40, 23, 0.02) 1px, transparent 1px),
+                linear-gradient(rgba(61, 40, 23, 0.02) 1px, transparent 1px),
+                var(--parchment);
+            background-size: 50px 50px, 50px 50px;
+            min-height: 100vh;
+            color: var(--ink-brown);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Ornamental Header */
+        .vintage-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--aged-paper);
+            border: 3px double var(--copper);
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            box-shadow: 
+                0 4px 8px rgba(61, 40, 23, 0.1),
+                inset 0 0 50px rgba(112, 66, 20, 0.05);
+            position: relative;
+        }
+
+        .vintage-header::before,
+        .vintage-header::after {
+            content: '◆';
+            position: absolute;
+            font-size: 2rem;
+            color: var(--copper);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .vintage-header::before {
+            left: 2rem;
+        }
+
+        .vintage-header::after {
+            right: 2rem;
+        }
+
+        .vintage-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: var(--sepia);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(61, 40, 23, 0.1);
+        }
+
+        .vintage-header .subtitle {
+            font-size: 1.3rem;
+            color: var(--bronze);
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .ornament {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--copper), transparent);
+            margin: 1rem auto;
+        }
+
+        /* Navigation Tabs */
+        .vintage-tabs {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .vintage-tab {
+            padding: 0.75rem 2rem;
+            background: var(--aged-paper);
+            border: 2px solid var(--bronze);
+            color: var(--ink-brown);
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(61, 40, 23, 0.2);
+        }
+
+        .vintage-tab:hover {
+            background: var(--parchment);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(61, 40, 23, 0.3);
+        }
+
+        .vintage-tab.active {
+            background: var(--copper);
+            color: var(--parchment);
+            border-color: var(--sepia);
+        }
+
+        /* Complete Practice Button */
+        .complete-practice-vintage {
+            margin-top: 1.5rem;
+            padding: 0.75rem 2rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--parchment);
+            background: var(--sage);
+            border: 2px solid var(--sepia);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(61, 40, 23, 0.2);
+            width: 100%;
+        }
+
+        .complete-practice-vintage:hover {
+            background: var(--vintage-teal);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(61, 40, 23, 0.3);
+        }
+
+        .practice-completed-vintage {
+            background: var(--antique-gold);
+            border-color: var(--antique-gold);
+        }
+
+        .completion-badge-vintage {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--antique-gold);
+            color: var(--ink-brown);
+            border: 2px solid var(--sepia);
+            margin-top: 1rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 6px rgba(61, 40, 23, 0.2);
+        }
+
+        /* Drawn Card Display */
+        #drawnCardDisplay {
+            max-width: 450px;
+            margin: 2rem auto;
+        }
+
+        /* Trading Card Design */
+        .vintage-card {
+            background: 
+                linear-gradient(135deg, var(--aged-paper) 0%, var(--parchment) 100%);
+            border: 4px double var(--bronze);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            box-shadow: 
+                0 8px 16px rgba(61, 40, 23, 0.25),
+                inset 0 0 30px rgba(112, 66, 20, 0.03);
+            transition: all 0.3s ease;
+            height: 100%;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vintage-card:hover {
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 
+                0 12px 24px rgba(61, 40, 23, 0.35),
+                inset 0 0 30px rgba(112, 66, 20, 0.05);
+        }
+
+        /* Corner Ornaments */
+        .vintage-card::before,
+        .vintage-card::after {
+            content: '✤';
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--copper);
+            opacity: 0.6;
+        }
+
+        .vintage-card::before {
+            top: 0.5rem;
+            left: 0.5rem;
+        }
+
+        .vintage-card::after {
+            bottom: 0.5rem;
+            right: 0.5rem;
+        }
+
+        .card-rarity-vintage {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.8rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: 2px solid;
+            background: var(--parchment);
+            box-shadow: 0 2px 4px rgba(61, 40, 23, 0.2);
+        }
+
+        .rarity-foundational {
+            color: var(--vintage-teal);
+            border-color: var(--vintage-teal);
+        }
+
+        .rarity-developing {
+            color: var(--rust);
+            border-color: var(--rust);
+        }
+
+        .rarity-transformational {
+            color: var(--antique-gold);
+            border-color: var(--antique-gold);
+            background: var(--ink-brown);
+        }
+
+        .card-symbol-vintage {
+            font-size: 4rem;
+            text-align: center;
+            margin: 1rem 0;
+            color: var(--copper);
+            text-shadow: 2px 2px 4px rgba(61, 40, 23, 0.15);
+        }
+
+        .card-title-vintage {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--sepia);
+            text-align: center;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .card-category-vintage {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            color: var(--bronze);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--copper);
+        }
+
+        .card-description-vintage {
+            color: var(--ink-brown);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .card-practice-vintage {
+            background: rgba(135, 168, 120, 0.1);
+            border-left: 3px solid var(--sage);
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        .card-practice-vintage strong {
+            font-family: 'Cinzel', serif;
+            color: var(--sepia);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* Grid Layout */
+        .cards-grid-vintage {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Draw Card Button */
+        .draw-button-vintage {
+            display: block;
+            margin: 3rem auto;
+            padding: 1.25rem 3rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--parchment);
+            background: var(--copper);
+            border: 3px solid var(--sepia);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(61, 40, 23, 0.3);
+            position: relative;
+        }
+
+        .draw-button-vintage:hover {
+            background: var(--bronze);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(61, 40, 23, 0.4);
+        }
+
+        .draw-button-vintage::before,
+        .draw-button-vintage::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+
+        .draw-button-vintage::before {
+            left: 1rem;
+        }
+
+        .draw-button-vintage::after {
+            right: 1rem;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Filter Section */
+        .filter-section {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--aged-paper);
+            border: 2px solid var(--bronze);
+            border-radius: 8px;
+        }
+
+        .filter-section label {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            color: var(--sepia);
+            margin-right: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .filter-section select {
+            padding: 0.5rem 1.5rem;
+            font-family: 'EB Garamond', serif;
+            font-size: 1rem;
+            border: 2px solid var(--bronze);
+            background: var(--parchment);
+            color: var(--ink-brown);
+            cursor: pointer;
+        }
+
+        /* Collection Section */
+        .collection-box {
+            background: var(--aged-paper);
+            border: 3px double var(--copper);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 8px rgba(61, 40, 23, 0.2);
+        }
+
+        .collection-header {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--sepia);
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .collection-count {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--bronze);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .collection-empty {
+            text-align: center;
+            padding: 3rem;
+            color: var(--bronze);
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        /* Buttons */
+        .vintage-btn {
+            padding: 0.75rem 2rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--parchment);
+            background: var(--bronze);
+            border: 2px solid var(--sepia);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(61, 40, 23, 0.2);
+        }
+
+        .vintage-btn:hover {
+            background: var(--copper);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(61, 40, 23, 0.3);
+        }
+
+        .vintage-btn-secondary {
+            background: var(--aged-paper);
+            color: var(--sepia);
+            border-color: var(--bronze);
+        }
+
+        .vintage-btn-secondary:hover {
+            background: var(--parchment);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .vintage-header h1 {
+                font-size: 2rem;
+            }
+            
+            .vintage-header::before,
+            .vintage-header::after {
+                display: none;
+            }
+
+            .cards-grid-vintage {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+
+        /* Opening Quote Section */
+        .opening-quote {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: var(--aged-paper);
+            border: 3px double var(--copper);
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(61, 40, 23, 0.2);
+        }
+
+        .opening-quote blockquote {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--sepia);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .opening-quote cite {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--bronze);
+            letter-spacing: 1px;
+        }
+
+        /* Intro Text */
+        .intro-text {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            text-align: center;
+            color: var(--ink-brown);
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="vintage-header">
+            <h1>Relationship Skill Trading Cards</h1>
+            <div class="ornament"></div>
+            <p class="subtitle">A Curated Collection for Deepening Connection</p>
+        </div>
+
+        <!-- Opening Quote -->
+        <div class="opening-quote">
+            <blockquote>
+                "The quality of our relationships determines the quality of our lives."
+            </blockquote>
+            <cite>— Esther Perel</cite>
+        </div>
+
+        <!-- Navigation -->
+        <div class="vintage-tabs">
+            <button class="vintage-tab active" onclick="showSection(0)">
+                Draw a Card
+            </button>
+            <button class="vintage-tab" onclick="showSection(1)">
+                Browse Collection
+            </button>
+            <button class="vintage-tab" onclick="showSection(2)">
+                My Practice Cards
+            </button>
+        </div>
+
+        <!-- Section 1: Draw a Card -->
+        <div class="page-section active" id="section0">
+            <div class="intro-text">
+                <p>
+                    Welcome to your personal collection of relationship skills. Each card represents 
+                    a practice drawn from evidence-based approaches including Nonviolent Communication, 
+                    Emotionally Focused Therapy, Gottman Method, and Internal Family Systems.
+                </p>
+                <p style="margin-top: 1rem;">
+                    Draw a card to discover your skill for this week.
+                </p>
+            </div>
+
+            <button class="draw-button-vintage" onclick="drawRandomCard()">
+                Draw Your Card
+            </button>
+
+            <div id="drawnCardDisplay" style="max-width: 450px; margin: 2rem auto; display: none;">
+                <!-- Drawn card appears here -->
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="vintage-btn vintage-btn-secondary" onclick="showSection(1)">
+                    View Full Collection
+                </button>
+            </div>
+        </div>
+
+        <!-- Section 2: Browse All Cards -->
+        <div class="page-section" id="section1">
+            <div class="filter-section">
+                <label>Filter by Skill Category:</label>
+                <select id="categoryFilter" onchange="filterCards()">
+                    <option value="all">All Skills</option>
+                    <option value="connection">Connection Skills (◇)</option>
+                    <option value="communication">Communication Skills (◯)</option>
+                    <option value="repair">Repair Skills (⬢)</option>
+                    <option value="regulation">Regulation Skills (△)</option>
+                    <option value="understanding">Understanding Skills (⬡)</option>
+                    <option value="introspection">Introspection Skills (⬬)</option>
+                </select>
+            </div>
+
+            <div id="allCardsGrid" class="cards-grid-vintage">
+                <!-- All cards displayed here -->
+            </div>
+        </div>
+
+        <!-- Section 3: My Collection -->
+        <div class="page-section" id="section2">
+            <div class="collection-box">
+                <h2 class="collection-header">My Practice Cards</h2>
+                <p class="collection-count" id="collectionCount">0 Cards in Collection</p>
+                
+                <div id="myCollectionGrid" class="cards-grid-vintage">
+                    <div class="collection-empty">
+                        Your practice collection is empty.<br>
+                        Draw a card to begin!
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="vintage-btn vintage-btn-secondary" onclick="clearCollection()">
+                        Clear Collection
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Skill Cards Data
+        const skillCards = [
+            // Connection Skills
+            {
+                category: 'connection',
+                symbol: '◇',
+                title: 'Reaching for Connection',
+                rarity: 'foundational',
+                description: 'When you feel distant, take a vulnerable step toward your partner instead of waiting for them to come to you.',
+                practice: 'This week: Notice when you feel disconnected and say "I miss feeling close to you."'
+            },
+            {
+                category: 'connection',
+                symbol: '◇',
+                title: 'Sharing Vulnerability',
+                rarity: 'developing',
+                description: 'Express your tender feelings and needs rather than your frustrations or defenses.',
+                practice: 'This week: Share one fear or longing with your partner that usually stays hidden.'
+            },
+            {
+                category: 'connection',
+                symbol: '◇',
+                title: 'Being Fully Present',
+                rarity: 'foundational',
+                description: 'Put away distractions and offer your full attention, showing your partner they matter.',
+                practice: 'This week: Dedicate 15 minutes of device-free, face-to-face time together daily.'
+            },
+
+            // Communication Skills  
+            {
+                category: 'communication',
+                symbol: '◯',
+                title: 'Observation Without Judgment',
+                rarity: 'foundational',
+                description: 'Describe what you see or hear without evaluation, interpretation, or blame.',
+                practice: 'This week: Start one conversation with "When I saw/heard..." instead of "You always..."'
+            },
+            {
+                category: 'communication',
+                symbol: '◯',
+                title: 'Expressing Feelings Clearly',
+                rarity: 'foundational',
+                description: 'Name your actual emotions (sad, scared, lonely) instead of thinking-feelings ("I feel like you don\'t care").',
+                practice: 'This week: Use "I feel [emotion]" three times, checking: Is this really a feeling?'
+            },
+            {
+                category: 'communication',
+                symbol: '◯',
+                title: 'Making Clear Requests',
+                rarity: 'developing',
+                description: 'Ask for specific, doable actions rather than vague demands or hoping they\'ll read your mind.',
+                practice: 'This week: Turn one complaint into a request: "Would you be willing to...?"'
+            },
+            {
+                category: 'communication',
+                symbol: '◯',
+                title: 'Identifying Core Needs',
+                rarity: 'developing',
+                description: 'Look beneath your feelings to the universal human needs driving them (safety, understanding, autonomy, connection).',
+                practice: 'This week: When upset, ask yourself "What do I really need right now?"'
+            },
+
+            // Repair Skills
+            {
+                category: 'repair',
+                symbol: '⬢',
+                title: 'Softened Startup',
+                rarity: 'foundational',
+                description: 'Begin difficult conversations gently, without criticism or contempt, focusing on your feelings and needs.',
+                practice: 'This week: Practice starting with "I feel..." instead of "You never..." or "Why can\'t you..."'
+            },
+            {
+                category: 'repair',
+                symbol: '⬢',
+                title: 'Accepting Influence',
+                rarity: 'developing',
+                description: 'Let your partner\'s perspective actually change your mind sometimes, showing their thoughts matter.',
+                practice: 'This week: When you disagree, find one thing your partner is right about and say it aloud.'
+            },
+            {
+                category: 'repair',
+                symbol: '⬢',
+                title: 'Making Repair Attempts',
+                rarity: 'foundational',
+                description: 'Use humor, affection, or direct bids to de-escalate conflict before it spirals.',
+                practice: 'This week: When tension rises, try "Can we press pause?" or reach for their hand.'
+            },
+            {
+                category: 'repair',
+                symbol: '⬢',
+                title: 'Taking Responsibility',
+                rarity: 'developing',
+                description: 'Own your part in the cycle without defensiveness, even if it\'s just 5% of the problem.',
+                practice: 'This week: Say "I can see how my [action] contributed to you feeling [emotion]."'
+            },
+
+            // Regulation Skills
+            {
+                category: 'regulation',
+                symbol: '△',
+                title: 'Recognizing Your Cycle',
+                rarity: 'foundational',
+                description: 'Notice when you slip into your familiar patterns (pursuing, withdrawing, attacking, freezing).',
+                practice: 'This week: Name your pattern out loud: "I notice I\'m doing my [pattern] thing."'
+            },
+            {
+                category: 'regulation',
+                symbol: '△',
+                title: 'Self-Soothing',
+                rarity: 'foundational',
+                description: 'Calm your nervous system so you can respond thoughtfully instead of reactively.',
+                practice: 'This week: When activated, take 3 slow breaths before speaking.'
+            },
+            {
+                category: 'regulation',
+                symbol: '△',
+                title: 'Taking Effective Timeouts',
+                rarity: 'developing',
+                description: 'Pause conflicts when flooded, with a clear plan to return (not stonewalling).',
+                practice: 'This week: If overwhelmed, say "I need 20 minutes to calm down, then let\'s reconnect."'
+            },
+            {
+                category: 'regulation',
+                symbol: '△',
+                title: 'Slowing Down',
+                rarity: 'transformational',
+                description: 'Intentionally pause in your negative cycle to create space for something different to happen.',
+                practice: 'This week: When you feel the dance starting, say "Can we slow this down?"'
+            },
+
+            // Understanding Skills
+            {
+                category: 'understanding',
+                symbol: '⬡',
+                title: 'Reflective Listening',
+                rarity: 'foundational',
+                description: 'Mirror back what you heard to ensure understanding before responding or defending.',
+                practice: 'This week: When your partner shares something difficult, respond with "What I\'m hearing is..."'
+            },
+            {
+                category: 'understanding',
+                symbol: '⬡',
+                title: 'Validating Emotions',
+                rarity: 'developing',
+                description: 'Acknowledge your partner\'s feelings make sense from their perspective, even if you disagree.',
+                practice: 'This week: Say "It makes sense you\'d feel [emotion] given [situation]."'
+            },
+            {
+                category: 'understanding',
+                symbol: '⬡',
+                title: 'Curiosity Over Criticism',
+                rarity: 'developing',
+                description: 'Approach your partner\'s actions with genuine interest in their experience rather than assumptions.',
+                practice: 'This week: Ask "What was happening for you when...?" instead of "Why did you...?"'
+            },
+            {
+                category: 'understanding',
+                symbol: '⬡',
+                title: 'Empathic Guessing',
+                rarity: 'transformational',
+                description: 'Try to sense and name what your partner might be feeling beneath their words or behavior.',
+                practice: 'This week: When your partner seems upset, try "I\'m wondering if you\'re feeling...?"'
+            },
+
+            // Introspection Skills
+            {
+                category: 'introspection',
+                symbol: '⬬',
+                title: 'Noticing Your Protectors',
+                rarity: 'developing',
+                description: 'Recognize when defensive parts of you (criticism, withdrawal, sarcasm) are trying to keep you safe.',
+                practice: 'This week: When you react defensively, pause and ask "What\'s this part trying to protect?"'
+            },
+            {
+                category: 'introspection',
+                symbol: '⬬',
+                title: 'Accessing Self-Energy',
+                rarity: 'transformational',
+                description: 'Connect with your calm, compassionate, curious core before engaging in difficult conversations.',
+                practice: 'This week: Before a hard talk, take 5 minutes to breathe and find your center.'
+            },
+            {
+                category: 'introspection',
+                symbol: '⬬',
+                title: 'Understanding Your Attachment',
+                rarity: 'developing',
+                description: 'Recognize your attachment patterns (anxious, avoidant, secure) and how they show up in conflict.',
+                practice: 'This week: Notice when your attachment wounds get triggered and name it kindly.'
+            },
+            {
+                category: 'introspection',
+                symbol: '⬬',
+                title: 'Befriending Your Exiles',
+                rarity: 'transformational',
+                description: 'Notice the vulnerable, hurt parts of you that drive your protective responses in relationships.',
+                practice: 'This week: When reactive, ask "What younger part of me feels threatened right now?"'
+            },
+            {
+                category: 'introspection',
+                symbol: '⬬',
+                title: 'Recognizing Projection',
+                rarity: 'transformational',
+                description: 'Notice when you\'re attributing your own disowned feelings or traits to your partner.',
+                practice: 'This week: When critical of your partner, ask "Could this be something I struggle with too?"'
+            }
+        ];
+
+        let myCollection = [];
+        let currentDrawnCard = null;
+
+        // Navigation
+        function showSection(index) {
+            const sections = document.querySelectorAll('.page-section');
+            const tabs = document.querySelectorAll('.vintage-tab');
+            
+            sections.forEach((section, i) => {
+                section.classList.toggle('active', i === index);
+            });
+            
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+
+            // Load appropriate content
+            if (index === 1) {
+                displayAllCards();
+            } else if (index === 2) {
+                updateCollectionDisplay();
+            }
+        }
+
+        // Create Card HTML (for browsing all cards)
+        function createCardHTML(card) {
+            return `
+                <div class="vintage-card">
+                    <div class="card-rarity-vintage rarity-${card.rarity}">${card.rarity}</div>
+                    <div class="card-symbol-vintage">${card.symbol}</div>
+                    <h3 class="card-title-vintage">${card.title}</h3>
+                    <div class="card-category-vintage">${card.category} skill</div>
+                    <p class="card-description-vintage">${card.description}</p>
+                    <div class="card-practice-vintage">
+                        <strong>Practice</strong>
+                        <p style="margin: 0;">${card.practice}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Create Full Card HTML with completion button (for drawn card)
+        function createFullCardHTML(card) {
+            return `
+                <div class="vintage-card">
+                    <div class="card-rarity-vintage rarity-${card.rarity}">${card.rarity}</div>
+                    <div class="card-symbol-vintage">${card.symbol}</div>
+                    <h3 class="card-title-vintage">${card.title}</h3>
+                    <div class="card-category-vintage">${card.category} skill</div>
+                    <p class="card-description-vintage">${card.description}</p>
+                    <div class="card-practice-vintage">
+                        <strong>Practice</strong>
+                        <p style="margin: 0;">${card.practice}</p>
+                    </div>
+                    <button class="complete-practice-vintage" onclick="completePractice()">
+                        ✓ Complete This Practice
+                    </button>
+                </div>
+            `;
+        }
+
+        // Draw Random Card with Completion Button
+        function drawRandomCard() {
+            const randomCard = skillCards[Math.floor(Math.random() * skillCards.length)];
+            currentDrawnCard = randomCard;
+            const displayDiv = document.getElementById('drawnCardDisplay');
+            
+            // Display card directly with completion button
+            displayDiv.innerHTML = createFullCardHTML(randomCard);
+            displayDiv.style.display = 'block';
+            displayDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Complete Practice - adds card to collection
+        function completePractice() {
+            if (!currentDrawnCard) return;
+            
+            // Add to collection
+            const exists = myCollection.some(c => c.title === currentDrawnCard.title);
+            if (!exists) {
+                myCollection.push({...currentDrawnCard, completed: true});
+                updateCollectionDisplay();
+                
+                // Show completion animation
+                const btn = document.querySelector('.complete-practice-vintage');
+                btn.innerHTML = '✓ Added to Collection!';
+                btn.classList.add('practice-completed-vintage');
+                btn.disabled = true;
+                
+                // Show celebration message
+                const card = document.querySelector('.vintage-card');
+                const badge = document.createElement('div');
+                badge.className = 'completion-badge-vintage';
+                badge.innerHTML = '✦ Practice Complete! Card Added ✦';
+                badge.style.animation = 'fadeIn 0.5s ease';
+                card.appendChild(badge);
+            } else {
+                alert('This card is already in your practice collection!');
+            }
+        }
+
+        // Display All Cards
+        function displayAllCards(filter = 'all') {
+            const grid = document.getElementById('allCardsGrid');
+            const filteredCards = filter === 'all' 
+                ? skillCards 
+                : skillCards.filter(card => card.category === filter);
+            
+            grid.innerHTML = filteredCards.map(card => createCardHTML(card)).join('');
+        }
+
+        // Filter Cards
+        function filterCards() {
+            const filter = document.getElementById('categoryFilter').value;
+            displayAllCards(filter);
+        }
+
+        // Collection Management
+        function addToCollection(card) {
+            const exists = myCollection.some(c => c.title === card.title);
+            if (!exists) {
+                myCollection.push(card);
+                updateCollectionDisplay();
+            }
+        }
+
+        function updateCollectionDisplay() {
+            const grid = document.getElementById('myCollectionGrid');
+            const count = document.getElementById('collectionCount');
+            
+            count.textContent = `${myCollection.length} Card${myCollection.length !== 1 ? 's' : ''} in Collection`;
+            
+            if (myCollection.length === 0) {
+                grid.innerHTML = '<div class="collection-empty">Your practice collection is empty.<br>Draw a card to begin!</div>';
+            } else {
+                grid.innerHTML = myCollection.map(card => createCardHTML(card)).join('');
+            }
+        }
+
+        function clearCollection() {
+            if (confirm('Clear your entire practice collection?')) {
+                myCollection = [];
+                updateCollectionDisplay();
+            }
+        }
+
+        // Initialize
+        displayAllCards();
+        updateCollectionDisplay();
+    </script>
+</body>
+</html>
